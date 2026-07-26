@@ -43,6 +43,10 @@ export default defineConfig({
           label: 'Automation',
           items: [{ autogenerate: { directory: 'automation' } }],
         },
+        {
+          label: 'Integration',
+          items: [{ autogenerate: { directory: 'integration' } }],
+        },
       ],
       plugins: [starlightLinksValidator()],
     }),
