@@ -1,11 +1,11 @@
 ---
 title: Overview
-description: Layers, dependency direction, the kernel state machine, and the canonical protocol of tea-rs.
+description: Layers, dependency direction, the kernel state machine, and the canonical protocol of Tea.
 ---
 
 > **Track:** `next` pre-release.
 
-tea-rs owns agent semantics while treating model providers, tools,
+Tea owns agent semantics while treating model providers, tools,
 persistence, policy, and user interfaces as replaceable adapters. It is not a
 chat UI library, an LLM HTTP client, or a coding-agent product — those can be
 built on top of it.

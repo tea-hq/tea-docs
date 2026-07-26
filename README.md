@@ -1,8 +1,8 @@
-# tea-rs
+# Tea
 
 [English](./README.md) · [简体中文](./README.zh-CN.md)
 
-A headless, product-agnostic agent runtime implemented in Rust. tea-rs owns a
+A headless, product-agnostic agent runtime implemented in Rust. Tea owns a
 canonical agent protocol, a provider-neutral model port, portable tool
 contracts, a pure policy and durable approval model, append-only branching
 sessions, and a resumable Tokio-native kernel. It is intended to be embedded by

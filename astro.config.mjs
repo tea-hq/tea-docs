@@ -13,7 +13,7 @@ export default defineConfig({
   site: 'https://tea-hq.github.io',
   integrations: [
     starlight({
-      title: 'tea-rs docs',
+      title: 'Tea docs',
       defaultLocale: 'root',
       locales: {
         // English docs live in src/content/docs/ and are served at `/`.

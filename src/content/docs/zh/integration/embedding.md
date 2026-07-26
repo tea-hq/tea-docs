@@ -1,6 +1,6 @@
 ---
 title: 嵌入与配置
-description: 通过 AgentRuntimeBuilder、AgentProfile 与进程内命令/事件 API 将 tea-rs 嵌入产品。
+description: 通过 AgentRuntimeBuilder、AgentProfile 与进程内命令/事件 API 将 Tea 嵌入产品。
 ---
 
 > **轨道：** `next` 预发布。

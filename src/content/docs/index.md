@@ -1,5 +1,5 @@
 ---
-title: tea-rs
+title: Tea
 description: A headless, product-agnostic Rust agent runtime for embedding in CLIs, desktop apps, services, and IDE integrations.
 hero:
   tagline: A headless Rust agent runtime you can embed.
@@ -14,8 +14,9 @@ hero:
 > **Track:** This site is on the `next` pre-release track. No public crate or
 > binary release is announced yet.
 
-tea-rs is a headless, product-agnostic agent runtime implemented in Rust. It is
-intended to be embedded by desktop applications, CLIs, services, IDE
+Tea is a headless, product-agnostic agent runtime implemented in Rust. This
+site documents tea-rs, the Rust implementation of Tea, intended to be embedded
+by desktop applications, CLIs, services, IDE
 integrations, and future product lines. The project owns a canonical agent
 protocol, a provider-neutral model port, portable tool contracts, a pure policy
 and durable approval model, append-only branching sessions, and a resumable
@@ -44,7 +45,7 @@ Tokio-native kernel.
 
 ## Status
 
-tea-rs is in pre-release `next` development. Source distribution, crate
+Tea is in pre-release `next` development. Source distribution, crate
 publication, and binary releases are not yet public. Pages here describe the
 `next` track; they distinguish implemented behavior from deferred work and
 never claim a private commit as public source.

@@ -2,7 +2,7 @@
 
 ## Track
 
-This documentation site begins on the `next` pre-release track for tea-rs, a
+This documentation site begins on the `next` pre-release track for Tea, a
 headless Rust agent runtime intended for embedding in products such as CLIs,
 desktop applications, services, and IDE integrations.
 

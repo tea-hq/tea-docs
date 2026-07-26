@@ -2,7 +2,7 @@
 
 ## Scope
 
-This repository contains reviewed public documentation for tea-rs. It is not a
+This repository contains reviewed public documentation for Tea. It is not a
 source mirror, a source export target, or a substitute for the authoritative
 product workspace.
 

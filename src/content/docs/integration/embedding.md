@@ -1,6 +1,6 @@
 ---
 title: Embedding and profiles
-description: Wire tea-rs into a product through AgentRuntimeBuilder, AgentProfile, and the in-process command/event API.
+description: Wire Tea into a product through AgentRuntimeBuilder, AgentProfile, and the in-process command/event API.
 ---
 
 > **Track:** `next` pre-release.
