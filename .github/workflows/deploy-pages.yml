@@ -1,0 +1,66 @@
+name: deploy-pages
+
+# Least-privilege GitHub Pages deployment for the public tea-rs documentation
+# site. Deploys only the protected default branch. The job has only
+# `contents:read`, `pages:write`, and `id-token:write` — no private-repository,
+# package-publication, or external-secret credentials. Deployment runs the same
+# docs-check gate (check + build + link validator + parity + safe-content)
+# before uploading, so a broken or non-parity site is never published.
+#
+# Deployment remains OFF until a maintainer enables GitHub Pages
+# (Settings -> Pages -> Source: GitHub Actions) and completes the dedicated
+# review recorded in ROADMAP.md. Until then this workflow runs but the
+# deploy-pages step cannot publish.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate (check + build + parity + safe-content)
+        run: pnpm run docs-check
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

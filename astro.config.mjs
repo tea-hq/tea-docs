@@ -7,6 +7,10 @@ import starlightLinksValidator from 'starlight-links-validator';
 // content directories enable Starlight's language switcher, fallback, and
 // translation-parity checks.
 export default defineConfig({
+  // Org-root GitHub Pages deployment at https://tea-hq.github.io/ — no `base`
+  // path prefix. A subpath or custom-domain target would be set at a later
+  // review; today the site is served at the organization root.
+  site: 'https://tea-hq.github.io',
   integrations: [
     starlight({
       title: 'tea-rs docs',

@@ -60,7 +60,10 @@ pnpm run docs-check # check + build + parity + safe-content 一键执行
 ## 状态与部署
 
 未公告任何公开 crate 或二进制发布。安装、下载与兼容性页面标注为 `next`，不得暗示可用性。
-GitHub Pages 部署**有意禁用**；将在公开页面校验完成后的后续评审中加入最小权限工作流。
+
+最小权限的 `deploy-pages` 工作流已就绪，仅在 `docs-check` 通过后部署受保护的 `main` 分支。站点
+面向组织根 `https://tea-hq.github.io/`，无子路径前缀。部署保持**关闭**，直到维护者在 GitHub
+Settings → Pages → Source: GitHub Actions 启用 Pages 并完成 `ROADMAP.md` 记录的专项评审。
 
 ## 许可证
 

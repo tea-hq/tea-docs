@@ -68,9 +68,14 @@ workspace. See:
 ## Status and deployment
 
 No public crate or binary release is announced. Installation, download, and
-compatibility pages are labeled `next` and must not imply availability. GitHub
-Pages deployment is intentionally **disabled**; a least-privilege workflow will
-be added in a later review after public-page validation is complete.
+compatibility pages are labeled `next` and must not imply availability.
+
+A least-privilege `deploy-pages` workflow exists and deploys only the protected
+`main` branch after the `docs-check` gate passes. The site targets the
+organization root, `https://tea-hq.github.io/`, with no subpath prefix.
+Deployment stays **off** until a maintainer enables GitHub Pages
+(Settings → Pages → Source: GitHub Actions) and completes the dedicated review
+recorded in `ROADMAP.md`.
 
 ## License
 
