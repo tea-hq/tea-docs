@@ -12,7 +12,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "linkcheck": "astro build"
+    "linkcheck": "astro build",
+    "parity": "node scripts/parity.mjs",
+    "safe-content": "node scripts/safe-content.mjs",
+    "docs-check": "astro check && astro build && node scripts/parity.mjs && node scripts/safe-content.mjs"
   },
   "dependencies": {
     "@astrojs/starlight": "0.41.4",

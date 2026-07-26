@@ -1,0 +1,55 @@
+name: docs-check
+
+# Strict documentation checks for the public tea-rs documentation site.
+# Runs the Starlight build (which includes the internal-link validator),
+# Astro diagnostics, language-page parity, and a safe-content scan.
+#
+# This workflow has read-only repository access and performs NO deployment.
+# GitHub Pages deployment is a separate, later review.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Build and validate docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Astro diagnostics
+        run: pnpm run check
+
+      - name: Build (runs the internal-link validator)
+        run: pnpm run build
+
+      - name: Language-page parity
+        run: pnpm run parity
+
+      - name: Safe-content scan
+        run: pnpm run safe-content

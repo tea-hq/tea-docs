@@ -23,7 +23,13 @@ pnpm install
 pnpm run dev        # local dev server
 pnpm run build      # production build (also runs the link validator)
 pnpm run check      # Astro type and diagnostics check
+pnpm run parity     # verify every English page has a /zh/ counterpart
+pnpm run safe-content  # scan content for private identifiers or real secrets
+pnpm run docs-check # check + build + parity + safe-content in one command
 ```
+
+The `docs-check` GitHub Actions workflow runs the same chain on push and pull
+requests to `main` with read-only access and no deployment.
 
 - [Overview](./src/content/docs/overview.md)
 - [Get started](./src/content/docs/get-started/install.md)
@@ -36,6 +42,12 @@ pnpm run check      # Astro type and diagnostics check
 - [Sessions and recovery](./src/content/docs/sessions/sessions.md)
 - [MCP configuration and lifecycle](./src/content/docs/mcp/configuration.md)
 - [JSONL/RPC protocol](./src/content/docs/automation/rpc.md)
+- [Embedding and profiles](./src/content/docs/integration/embedding.md)
+- [Model providers](./src/content/docs/integration/model-providers.md)
+- [Tools and policy](./src/content/docs/integration/tools-policy.md)
+- [Session stores](./src/content/docs/integration/session-stores.md)
+- [MCP integration](./src/content/docs/integration/mcp.md)
+- [Protocol and RPC boundary](./src/content/docs/integration/protocol-rpc.md)
 
 ## Maintainer contract
 

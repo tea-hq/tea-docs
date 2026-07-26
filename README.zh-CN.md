@@ -18,7 +18,13 @@ pnpm install
 pnpm run dev        # 本地开发服务器
 pnpm run build      # 生产构建（同时运行链接校验器）
 pnpm run check      # Astro 类型与诊断检查
+pnpm run parity     # 校验每个英文页都有 /zh/ 对应页
+pnpm run safe-content  # 扫描内容中的私有标识符或真实密钥
+pnpm run docs-check # check + build + parity + safe-content 一键执行
 ```
+
+`docs-check` GitHub Actions 工作流在 push 与针对 `main` 的 pull request 上运行同一链，
+仅具只读权限，不执行部署。
 
 - [概览](./src/content/docs/zh/overview.md)
 - [快速开始](./src/content/docs/zh/get-started/install.md)
@@ -31,6 +37,12 @@ pnpm run check      # Astro 类型与诊断检查
 - [会话与恢复](./src/content/docs/zh/sessions/sessions.md)
 - [MCP 配置与生命周期](./src/content/docs/zh/mcp/configuration.md)
 - [JSONL/RPC 协议](./src/content/docs/zh/automation/rpc.md)
+- [嵌入与配置](./src/content/docs/zh/integration/embedding.md)
+- [模型提供商](./src/content/docs/zh/integration/model-providers.md)
+- [工具与策略](./src/content/docs/zh/integration/tools-policy.md)
+- [会话存储](./src/content/docs/zh/integration/session-stores.md)
+- [MCP 集成](./src/content/docs/zh/integration/mcp.md)
+- [协议与 RPC 边界](./src/content/docs/zh/integration/protocol-rpc.md)
 
 ## 维护者契约
 
