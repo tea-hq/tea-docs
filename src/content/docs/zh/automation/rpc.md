@@ -3,8 +3,6 @@ title: JSONL/RPC 协议
 description: tea --rpc 的 stdin/stdout 自动化接口——成帧、请求、输出、重连与恢复。
 ---
 
-> **轨道：** `next` 预发布。
-
 `tea --rpc` 通过 stdin/stdout 暴露进程本地自动化接口。它独立于规范智能体协议版本，尽管事件载荷
 含未更改的规范信封。
 

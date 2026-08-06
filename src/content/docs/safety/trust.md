@@ -3,8 +3,6 @@ title: Workspace trust
 description: How tea decides whether to load project-local settings, skills, and prompt templates, and what trust does and does not do.
 ---
 
-> **Track:** `next` pre-release.
-
 The presence of `AGENTS.md`, `CLAUDE.md`, or `.tea/` marks a workspace as having
 project-local resources. Before trust, the CLI does not load project settings,
 skills, or prompt templates. Trust permits loading text; it does not validate

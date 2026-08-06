@@ -3,8 +3,6 @@ title: Security and operational boundaries
 description: tea is not a sandbox. Native execution, prompt injection, credentials, tool boundaries, and MCP server trust.
 ---
 
-> **Track:** `next` pre-release.
-
 ## Native execution is not sandboxed
 
 `read`, `write`, `edit`, and `bash` run as the current OS user. Workspace path

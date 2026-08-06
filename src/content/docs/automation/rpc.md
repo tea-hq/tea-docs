@@ -3,8 +3,6 @@ title: JSONL/RPC protocol
 description: The tea --rpc stdin/stdout automation interface — framing, requests, output, reconnect, and recovery.
 ---
 
-> **Track:** `next` pre-release.
-
 `tea --rpc` exposes a process-local automation interface over stdin/stdout. It
 is independent of the canonical agent protocol version even though event
 payloads contain unchanged canonical envelopes.

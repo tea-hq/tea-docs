@@ -1,59 +1,55 @@
 ---
-title: Source installation
-description: Build the tea CLI from source and run your first session. Pre-release next track; no public release is announced.
+title: Install Tea
+description: Install the Tea CLI and TUI on macOS or Windows, then start your first session.
 ---
 
-> **Track:** `next` pre-release. No public crate, binary, or source release is
-> announced yet. The commands below describe the intended build flow for when a
-> public source release is published; they do not imply that a downloadable
-> artifact is currently available.
+The `tea` command includes both the interactive TUI and the headless CLI modes.
 
-## Requirements
+## macOS
 
-- A Rust toolchain matching the project's supported version.
-- A supported Tier 1 development platform.
-- An OpenAI-compatible endpoint and credential for live model access (see
-  [Credentials](/configuration/credentials/)).
+Install from the Tea Homebrew tap:
 
-## Build the CLI
-
-When a public source release is published, build the `tea` CLI from source:
-
-```bash
-cargo build --locked -p tea-cli --release
-./target/release/tea --version
+```sh
+brew install tea-hq/tap/tea
 ```
 
-Maintainer binary bundles can be produced for selected Tier 1 targets. Crate
-publication remains disabled until release-readiness review.
+Upgrade later with `brew upgrade tea-hq/tap/tea`.
+
+## Windows
+
+Run the installer from PowerShell:
+
+```powershell
+irm https://tea-hq.github.io/install.ps1 | iex
+```
+
+Open a new terminal after installation, then verify the command:
+
+```powershell
+tea --version
+```
 
 ## First run
 
-Configure an OpenAI-compatible endpoint without writing the secret to a settings
-file:
+Choose a provider, model, and transient API key. This example uses an
+OpenAI-compatible endpoint; Tea's agent runtime remains provider-independent.
 
-```bash
-export TEA_OPENAI_API_KEY='YOUR_KEY'
-export TEA_OPENAI_MODEL='gpt-5.4'
-# Optional for a gateway or proxy:
-export TEA_OPENAI_BASE_URL='https://api.openai.com/v1'
-
-tea --cwd /path/to/repository --new --trust once
+```sh
+export TEA_API_KEY='YOUR_KEY'
+tea --provider openai --model gpt-4o-mini --api-key "$TEA_API_KEY" --new
 ```
 
-The default tool set is `read`, `write`, `edit`, and `bash`. Read access may run
-without a prompt when policy permits it. Mutating tools pause at a durable,
-redacted approval request. Choose **allow once**, the bounded session grant, or
-**deny** only after checking the tool, effects, resource, and target.
+On Windows PowerShell:
 
-## Headless modes for scripts
-
-```bash
-tea --print --trust ignore 'summarize the repository'
-tea --json --trust ignore 'inspect the current changes'
-tea --rpc --continue --trust ignore
+```powershell
+$env:TEA_API_KEY = 'YOUR_KEY'
+tea --provider openai --model gpt-4o-mini --api-key $env:TEA_API_KEY --new
 ```
 
-See [CLI modes](/get-started/cli-modes/) for the full mode reference and
-[Security and operational boundaries](/safety/security/) before using `tea`
-on an untrusted workspace.
+The TUI opens in the current directory. If the workspace contains project-local
+instructions or `.tea` configuration, Tea asks before loading them. The default
+tools are `read`, `write`, `edit`, and `bash`; mutating operations can pause for
+approval.
+
+Continue with [Using the TUI](/cli/tui/) or configure another endpoint in
+[Credentials and models](/configuration/credentials/).

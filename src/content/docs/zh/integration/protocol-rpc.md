@@ -1,68 +1,48 @@
 ---
-title: 协议与 RPC 边界
-description: 规范协议 1.0 契约、版本域、支持窗口，以及本地 JSONL/RPC 传输边界。
+title: 协议与 RPC
+description: 选择进程内命令/事件 API，或 tea 的 JSONL/RPC 进程边界。
 ---
 
-> **轨道：** `next` 预发布。
+## 进程内集成
 
-`tea-protocol` 是规范的、与提供商无关的协议层。它限于纯域值与 JSON 序列化契约；不执行模型或
-工具、不持久化会话、不评估策略、不管理异步任务、不依赖 Tokio。协议版本独立于 crate SemVer。
+宿主需要流式事件，或 `AgentSession::prompt` 之外的命令时，使用 `AgentRuntime`：
 
-## 协议面
+```rust
+let mut events = runtime.subscribe(session_id)?;
+let mut send = Box::pin(runtime.send(command));
 
-本 crate 拥有四个独立契约：
+let outcome = loop {
+    tokio::select! {
+        result = &mut send => break result?,
+        Some(event) = events.recv() => handle(event),
+    }
+};
+```
 
-- `CommandEnvelope` 与 `AgentCommand` —— 宿主接受或拒绝的请求动作；
-- `EventEnvelope` 与 `AgentEvent` —— 可观察的生命周期与流式输出；
-- `RecordEnvelope` 与 `SessionRecord` —— 回放与恢复所需的仅追加事实；
-- `ProtocolErrorEnvelope` 与 `ProtocolError` —— 带安全诊断的稳定机器可读失败。
+命令与事件使用 `tea-protocol` 中与 Provider 无关的值，`outcome` 是命令结果。有界事件订阅会施加背压，因此命令运行时，
+宿主必须持续消费事件。
 
-共享类型包括 UUIDv7 强 ID、权威会话本地排序的十进制字符串 `SessionSequence`、RFC 3339 UTC 毫秒
-时间戳、用户/助手/工具结果消息、文本/思考/图像/工具调用内容块、精确十进制成本、JS 安全令牌
-用量与有界反向域元数据。规范 JSON 使用 `camelCase` 字段、`type` 判别符与 `snake_case` 判别值。
+## 进程集成
 
-## 兼容规则
+集成应用不希望直接链接 Rust 运行时时，使用 CLI 边界：
 
-协议主版本 1 内：
+```sh
+tea --rpc --continue --trust ignore
+```
 
-- 已知类型上的未知可选对象字段被忽略；
-- 有界命名空间元数据在扩展点保留；
-- 未知命令以 `unsupported_command` 拒绝；
-- 未知持久化记录以 `unsupported_record` 中止回放；
-- 未知可观察事件仅当信封声明 `compatibility: "skippable_observation"` 时可跳过；
-- 未知枚举值被拒绝，除非类型文档化保留；
-- 重复 JSON 键在信封与元数据边界递归拒绝。
+每行写入一个紧凑 JSON 请求：
 
-## 事件与记录
+```json
+{"rpcVersion":"1.0","id":"p1","type":"prompt","payload":{"text":"Summarize the changes."}}
+```
 
-文本增量与工具进度可为临时观察。最终消息、审批转换、工具执行边界、中断状态、分支变更、压缩
-来源与轮次检查点是持久化记录。每个协议 1.0 持久化记录类型都为回放所必需，不可跳过。驱动回放
-的是 `SessionSequence`——而非 UUID 或时间戳排序。
+RPC stdout 只包含 Frame，诊断写入 stderr。Prompt 命令先返回 `command_accepted`，随后输出观察事件与
+终态 `command_finished`。重连后应使用 `query_snapshot` 获取持久化真相，不要依赖事件时序重建状态。
 
-## 版本域与支持窗口
+| 边界 | 适用场景 |
+| --- | --- |
+| `AgentSession` | 一个简单的进程内对话。 |
+| `AgentRuntime` | 完整的进程内命令、事件、存储与审批。 |
+| `tea --rpc` | 与语言无关的本地进程集成。 |
 
-`tea-rs` 跟踪独立的 crate、协议、SQLite schema 与会话归档版本。一个域的兼容变更不蕴含另一域
-兼容。
-
-- **协议：** 写入方发出 `1.0`；读取方接受协议主版本 1 的已知信封。累加 minor 必须保留所有既有
-  字段与判别符并新增夹具集；新增必需持久化状态、改变字段含义或协议主版本 2 需要新迁移决策，绝
-  不被静默接受。
-- **SQLite：** schema v2 为当前。打开 v1 数据库会通过新增会话目录并记录 v2 事务性地升级；权威
-  记录信封不被改写。迁移单调且仅向前；未知未来 schema 版本被拒绝。
-- **会话归档：** 格式 v1 是独立的 JSON 交换格式，对未知格式或记录类型失败关闭，并要求每个受
-  支持前驱有显式导入路径。
-
-兼容性夹具是不可变输入；新行为获得新版本夹具目录，而非改写早期版本。
-
-## 宿主、存储与 RPC 边界
-
-受支持的 1.0 面由兼容性矩阵固定：
-
-- 进程内 `AgentRuntime` —— 规范命令、有界订阅、配置、原生工具、审批、快照与带兼容存储的恢复。
-- CLI JSONL/RPC —— 本地 stdin/stdout 成帧、提示控制、审批解析、快照、重连与持久化会话恢复。
-  仅进程本地传输；客户端以快照而非事件时序作为持久真相。
-- 内存与 SQLite 会话存储 —— 分别为默认嵌入语义与持久化回放。
-- MCP —— 仅显式配置的本地 stdio。
-
-`tea --rpc` 独立于规范协议版本，尽管事件载荷含未更改的规范信封。成帧、请求类型、输出与重连
-行为见 [JSONL/RPC 协议](/zh/automation/rpc/)。
+完整请求格式见 [JSONL/RPC 请求参考](/zh/automation/rpc/)。

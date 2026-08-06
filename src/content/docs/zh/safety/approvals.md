@@ -3,8 +3,6 @@ title: 审批与授权
 description: tea 如何评估工具调用、呈现审批与界定授权。
 ---
 
-> **轨道：** `next` 预发布。
-
 策略评估的是已校验的调用——而非仅工具名——依据执行者、配置、工作区、工具规格、已校验参数、
 声明效应、已解析资源、先前授权、执行环境与时间。评估是同步的，不执行副作用、不读取时钟。
 
@@ -25,11 +23,9 @@ Redirect(execution target, such as a sandbox)
 
 审批请求是持久化且已脱敏的。选择有：
 
-- **allow once** —— 授权本次调用；
-- **allow for the current run** —— 有界会话授权；
-- **allow for a bounded resource pattern and duration** —— 持久授权；
-- **deny once**；
-- **persistent deny**。
+- **allow once** —— 只授权本次调用；
+- **allow for session** —— 为当前会话中匹配的资源签发有界 Grant；
+- **deny** —— 拒绝本次调用。
 
 仅在核对精确工具、效应、资源、访问模式与目标后做出选择。审批意为“在已记录策略上下文下授权此
 操作”——并不代表该操作安全。

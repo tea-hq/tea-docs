@@ -2,25 +2,25 @@
 
 ## Track
 
-This documentation site begins on the `next` pre-release track for Tea, a
-headless Rust agent runtime intended for embedding in products such as CLIs,
-desktop applications, services, and IDE integrations.
+This documentation covers the current Tea release, including the `tea` CLI/TUI and
+the public Rust crates used to embed Tea in an application.
 
 ## Availability
 
-No public crate or binary release is currently announced. Until a public release
-is declared, pages must label commands, examples, and compatibility statements
-as `next` material and must not imply that installation artifacts are available.
+The public documentation may describe the current package and binary
+distribution contract. Before publishing the documentation, maintainers must ensure that the crates,
+Homebrew formula, and platform installer URLs named by the documentation are
+available.
 
-Do not add download instructions, support guarantees, release dates, or version
-compatibility claims without a reviewed public release record.
+Do not publish a command that depends on an artifact that will not exist when
+the documentation is published. Future compatibility or support claims still require a
+reviewed public release decision.
 
-## What This Site May State
+## What This Documentation May State
 
-Reviewed pages may describe the architecture and behavior established for the
-`next` track, including product boundaries and safety requirements. They must
-distinguish implemented behavior from deferred work, use public-safe examples,
-and identify the applicable track near technical instructions.
+Reviewed pages may describe the implemented architecture, integration
+surface, CLI/TUI behavior, and safety boundaries. They must use public-safe
+examples and identify the applicable version near technical instructions.
 
 Update this record only when public release status or the supported documentation
 track changes. Keep it concise and do not add source-history, operational, or

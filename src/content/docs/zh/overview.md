@@ -3,25 +3,36 @@ title: 概览
 description: Tea 的分层、依赖方向、内核状态机与规范协议。
 ---
 
-> **轨道：** `next` 预发布。
-
 Tea 拥有智能体语义，同时将模型提供商、工具、持久化、策略与用户界面视为可替换的适配器。它
 不是聊天 UI 库、LLM HTTP 客户端或编码智能体产品——这些可以构建在它之上。
 
+## 设计来源
+
+Tea 的智能体架构借鉴了 [Pi](https://pi.dev/docs/latest/sdk)：小型会话 API、与 Provider 无关
+的智能体循环、可替换的 Provider 和工具适配器，以及多个产品层共享同一个引擎。Tea 在此基础上
+定义了自己的 Rust 契约，包括持久化审批、仅追加会话、策略以及规范命令与事件。
+
+终端交互借鉴了 [OpenAI Codex](https://github.com/openai/codex) TUI：语义化时间线 Cell、稳定
+的底部编辑器、紧凑的工具生命周期行、实时跟随滚动和聚焦的审批 Overlay。
+
+Tea 是独立实现，不声明与上述参考项目的源码、API、Wire 或产品兼容性。
+
 ## 分层
 
-```text
-产品层（CLI / 桌面 / 服务 / IDE）
-                    |
-               智能体协议
-                    |
-              产品配置
-                    |
-                智能体内核
-          /         |          \
-    模型端口   工具运行时   会话端口
-                    |
-               策略引擎
+```mermaid
+flowchart TB
+    Hosts[CLI · 桌面 · 服务 · IDE] --> Facade[tea 门面层]
+    Facade --> Profile[产品 Profile]
+    Facade --> Kernel[智能体内核]
+    Kernel --> Model[模型端口]
+    Kernel --> Tools[工具运行时]
+    Kernel --> Policy[策略引擎]
+    Kernel --> Session[会话端口]
+    Kernel --> Protocol[规范协议]
+
+    Providers[Provider 适配器] -. 实现 .-> Model
+    Executors[原生与 MCP 适配器] -. 实现 .-> Tools
+    Stores[内存与 SQLite 存储] -. 实现 .-> Session
 ```
 
 依赖向内指向。内部 crate 绝不依赖 UI 框架、特定模型提供商、终端 UI 类型或 MCP/插件实现细节。
@@ -39,10 +50,21 @@ Tea 拥有智能体语义，同时将模型提供商、工具、持久化、策�
 
 内核是显式状态机，而非递归式聊天助手：
 
-```text
-Idle -> PreparingContext -> StreamingModel -> PlanningToolCalls
-  -> EvaluatingPolicy -> WaitingApproval -> ExecutingTools
-  -> CommittingTurn -> Completed | Failed
+```mermaid
+flowchart LR
+    Idle --> Context[准备上下文]
+    Context --> Model[流式模型请求]
+    Model --> Plan[规划工具调用]
+    Plan --> Policy[评估策略]
+    Policy --> Approval[等待审批]
+    Policy --> Tools[执行工具]
+    Approval --> Tools
+    Tools --> Commit[提交轮次]
+    Commit --> Context
+    Commit --> Completed
+    Context --> Failed
+    Model --> Failed
+    Tools --> Failed
 ```
 
 关键不变式：
@@ -73,7 +95,7 @@ SQLite 是首个持久化后端，与内存引用存储通过同一一致性套�
 恢复仅从持久化边界重启。在副作用开始后被中断的工具被记录为不确定，除非其执行器声明并实现安全的
 恢复策略，否则绝不自动回放。
 
-## 推迟项
+## 当前范围
 
-首个稳定发布将不包含自主多智能体编排、插件市场、向量数据库记忆、浏览器自动化、任意进程内动态
-库或分布式调度。推迟清单以项目路线图为准。
+Tea 不包含自主多智能体编排、插件市场、向量数据库记忆、浏览器自动化、任意进程内动态库或
+分布式调度。

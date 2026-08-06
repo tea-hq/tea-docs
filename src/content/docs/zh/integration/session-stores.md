@@ -1,49 +1,35 @@
 ---
 title: 会话存储
-description: 仅追加会话记录、内存引用存储、SQLite 持久化存储、分支、恢复与归档交换格式。
+description: 选择内存会话，或为 AgentRuntime 接入 SQLite 持久化。
 ---
 
-> **轨道：** `next` 预发布。
+`AgentSession` 使用内存存储，适合短生命周期的应用内对话。会话需要在进程重启后恢复时，请使用
+`AgentRuntime`。
 
-`tea-session` 拥有仅追加会话记录、确定性回放、物化状态、分支、审批/授权日志与存储契约。它
-Tokio-free，不含模型提供商、工具执行器、文件系统、进程、网络、数据库或墙上时钟实现。
+## 打开 SQLite 存储
 
-## 真相来源与回放
+```sh
+cargo add tea-session-sqlite
+```
 
-规范协议 1.0 `RecordEnvelope` 值是权威。`SessionReducer` 要求序零处有一条 `SessionCreated`
-记录、连续的会话本地序列号、全局唯一 ID、匹配的工具声明与顺序，以及有效的检查点、中断、取消、
-压缩与分支引用。`MaterializedSessionState` 是可重建投影，暴露活动转录与配置、挂起审批、工具恢复
-状态、运行终态、检查点、压缩来源、分支摘要与活动分支。Reducer 失败绝不部分修改状态。
+```rust
+let store = Arc::new(SqliteSessionStore::open("tea-sessions.sqlite3")?);
 
-## 分支与恢复
+let builder = AgentRuntimeBuilder::new()
+    .session_store(store.clone())
+    .session_catalog(store);
+```
 
-分支感知会话在 `SessionCreated` 上放置根 `branchId`。fork 在源谱系中某持久化记录处克隆源投影，
-仅在 `ActiveBranchChanged` 后激活；绝不改写源记录或父叶。带挂起审批或未完成工具调用的 fork 点
-被拒绝，以避免复制不确定外部效应。无根分支的既有协议 1.0 日志仍可作为遗留无分支会话回放。
+然后继续为 Builder 配置 Provider、Actor、Workspace 与 Profile。同一个 SQLite 值同时实现持久化
+记录存储，以及用于列出和命名会话的 Session Catalog。
 
-在终态结果前被中断的工具保持显式不确定，并记录其执行目标与幂等性。非幂等工作绝不回放。提供商
-流变为中断运行状态，而非虚构的完成消息。
+测试中可以使用 `InMemorySessionStore` 或 `SqliteSessionStore::in_memory()`。
 
-## 追加事务
+## 恢复契约
 
-`SessionStore` 对象安全，返回项目拥有的装箱 future，不暴露 Tokio。`InMemorySessionStore` 是语义
-参考实现。`AppendTransaction` 全有或全无：规范追加使用预期会话序列；类型化审批/授权日志使用独立
-事实计数修订；`AllowSession` 签发的授权与匹配的解析一起提交；撤销追加不可变的已撤销授权，而非
-原地更新授权。活动未撤销授权可按执行者跨会话查询，但仅作策略候选——不能覆盖拒绝。
+- 记录仅追加，并按会话序列回放。
+- 待审批请求与已提交消息会在重启后保留。
+- 工具在副作用开始后被中断时会标记为不确定，不会自动回放。
+- Fork 创建新的仅追加分支，绝不改写父分支。
 
-## SQLite 持久化存储
-
-`tea-session-sqlite` 在带版本、仅追加的 SQLite 事件日志上实现 `SessionStore` 契约，并复用共享
-追加引擎，故其可观察行为与内存引用存储一致。每条规范记录一行，外加审批工件与授权日志事实的
-副表。`(session_id, sequence)` 上的唯一索引强制预期序列冲突；授权 id 上的唯一索引防止跨会话
-重复签发。存储使用互斥锁守护的单连接；追加在 `IMMEDIATE` 事务中运行。陈旧预期序列收到
-`SequenceConflict`。进程重启后，持久化日志是真相来源。
-
-## 归档交换
-
-`SessionArchive` 是带版本的 JSON 交换/诊断格式，非并发存储。解码拒绝重复键与超大集合，保留
-协议兼容性错误，并在一次创建事务前预检完整规范回放与类型化日志。导入绝不合并或重编号记录。删除、
-保留、列表/搜索索引、压缩策略与自动执行恢复刻意推迟。
-
-CLI 用户视角见 [会话与恢复](/zh/sessions/sessions/)；迁移窗口见
-[协议与 RPC 边界](/zh/integration/protocol-rpc/)。
+请将数据库作为应用数据保护：即使凭据被排除，其中仍可能包含 Prompt、模型输出、工具参数和命令输出。

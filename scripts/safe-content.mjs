@@ -1,7 +1,7 @@
 // Safe-content scan for public documentation pages.
 //
 // Scans every Markdown/MDX page under src/content/docs for material that must
-// never appear in the public site: private Git hosts, the private repository
+// never appear in the public documentation: private Git hosts, the private repository
 // path, internal document directories (decisions, plans, security, spikes,
 // cli, mcp), commit hashes, and real-looking secrets. The maintainer context
 // files (AGENTS.md, maintainers/*) deliberately discuss these concepts and are
@@ -26,6 +26,14 @@ const PATTERNS = [
 	},
 	{ name: 'commit ref', re: /\bcommit\s+[0-9a-f]{7,40}\b/i },
 	{ name: 'commit url ref', re: /\/commit\/[0-9a-f]{7,40}\b/i },
+	{
+		name: 'repository-local Cargo package command',
+		re: /cargo\s+(?:run|test|check|build)\b[^\n]*\s(?:-p|--package)(?:\s|=)/i,
+	},
+	{
+		name: 'repository-local Cargo example command',
+		re: /cargo\s+(?:run|test)\b[^\n]*--examples?\b/i,
+	},
 	{ name: 'openai key literal', re: /\bsk-[A-Za-z0-9]{20,}\b/ },
 	{
 		name: 'real-looking secret assignment',

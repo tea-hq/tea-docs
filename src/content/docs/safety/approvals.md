@@ -3,8 +3,6 @@ title: Approvals and grants
 description: How tea evaluates tool invocations, presents approvals, and bounds grants.
 ---
 
-> **Track:** `next` pre-release.
-
 Policy evaluates a validated invocation — not merely a tool name — against
 actor, profile, workspace, tool spec, validated arguments, declared effects,
 resolved resources, prior grants, execution environment, and time. Evaluation
@@ -30,10 +28,9 @@ sets fail closed.
 An approval request is durable and redacted. Choices are:
 
 - **allow once** — authorize this single invocation;
-- **allow for the current run** — bounded session grant;
-- **allow for a bounded resource pattern and duration** — persistent grant;
-- **deny once**;
-- **persistent deny**.
+- **allow for session** — issue a grant bounded to matching resources in the
+  current session;
+- **deny** — reject this invocation.
 
 Choose an option only after checking the exact tool, effects, resource, access
 mode, and target. Approval means "authorize this operation under the recorded

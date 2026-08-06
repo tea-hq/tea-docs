@@ -3,8 +3,6 @@ title: CLI 模式与命令
 description: tea CLI 的交互、print、JSON 事件与 JSONL/RPC 模式，以及斜杠命令与退出码。
 ---
 
-> **轨道：** `next` 预发布。
-
 运行 `tea --help` 获取权威参数列表。模式标志互斥；交互式终端默认选择 TUI，而管道 stdin 选择
 print 模式。
 
@@ -75,9 +73,13 @@ RPC 仅通过请求帧接收提示。成帧、请求类型、边界与重连行�
 | `/session` | 打开会话选择器 |
 | `/name [text]` | 设置或清除所选会话名 |
 | `/model [model-id]` | 选择模型或打开模型选择器 |
+| `/reasoning [level]` | 选择推理强度或打开对应选择器 |
 | `/compact` | 通过已配置摘要器压缩 |
 | `/tree` | 打开仅追加的分支树 |
 | `/fork <message-id>` | 从持久化消息分支并激活 |
+| `/image <path>` | 附加明确指定的工作区图片 |
+| `/image remove <index>` | 删除一项编辑器附件 |
+| `/image clear` | 删除全部编辑器附件 |
 | `/copy` | 复制最近的助手响应 |
 | `/mcp` | 显示安全的 MCP 健康与冻结的本地别名 |
 | `/mcp reconnect <server-id>` | 仅当发现匹配冻结目录时重连单个服务器 |
@@ -85,6 +87,7 @@ RPC 仅通过请求帧接收提示。成帧、请求类型、边界与重连行�
 | `/quit` | 恢复终端并退出 |
 
 MCP 重连绝不改变实时注册表，也绝不回放进行中的调用。
+时间线、编辑器、审批、选择器和按键工作流见[使用 TUI](/zh/cli/tui/)。
 
 ## 退出码
 

@@ -2,50 +2,48 @@
 title: Tea
 description: A headless, product-agnostic Rust agent runtime for embedding in CLIs, desktop apps, services, and IDE integrations.
 hero:
-  tagline: A headless Rust agent runtime you can embed.
+  tagline: Build with the provider-neutral SDK or work directly in the Tea TUI.
   actions:
-    - text: Get started
+    - text: Install Tea
       link: /get-started/install/
       variant: primary
-    - text: Overview
-      link: /overview/
+    - text: SDK Quick Start
+      link: /sdk/quick-start/
 ---
 
-> **Track:** This site is on the `next` pre-release track. No public crate or
-> binary release is announced yet.
-
-Tea is a headless, product-agnostic agent runtime implemented in Rust. This
-site documents tea-rs, the Rust implementation of Tea, intended to be embedded
-by desktop applications, CLIs, services, IDE
-integrations, and future product lines. The project owns a canonical agent
+Tea is a headless, product-agnostic agent runtime implemented in Rust. It can be
+embedded by desktop applications, CLIs, services, and IDE integrations, or used
+directly through the Tea terminal interface. Tea owns a canonical agent
 protocol, a provider-neutral model port, portable tool contracts, a pure policy
 and durable approval model, append-only branching sessions, and a resumable
 Tokio-native kernel.
 
-## What you can do with it
+## Choose your path
 
-- Run a model–tool loop with explicit, durable state transitions.
-- Stream text, thinking, tool activity, usage, and cost through one canonical
-  event protocol.
-- Evaluate every sensitive tool invocation through ordered policy and durable,
-  bounded approvals.
-- Persist resumable, compactable, branchable sessions to SQLite.
-- Drive the same runtime interactively, from scripts, or over a strict
-  JSONL/RPC interface.
+### CLI & TUI
+
+Use the `tea` coding agent interactively in a terminal, run one-shot prompts in
+print mode, consume canonical JSON events, or integrate through JSONL/RPC. All
+four modes share one coding service, policy engine, and session model.
+
+[Install Tea](/get-started/install/), then learn the
+[TUI workflow](/cli/tui/).
+
+### SDK
+
+Embed an agent in a Rust application through `AgentSession`, or use
+`AgentRuntime` when the host needs canonical commands, streamed events, durable
+storage, approvals, multiple profiles, and custom adapters.
+
+[Start with the minimal SDK example](/sdk/quick-start/).
 
 ## Where to start
 
-- [Overview](/overview/) — layers, dependency direction, and the kernel loop.
-- [Get started](/get-started/install/) — building the `tea` CLI and your first
-  run.
-- [CLI modes](/get-started/cli-modes/) — interactive, print, JSON event, and
-  RPC.
-- [Security and operational boundaries](/safety/security/) — read this before
-  trusting a workspace.
-
-## Status
-
-Tea is in pre-release `next` development. Source distribution, crate
-publication, and binary releases are not yet public. Pages here describe the
-`next` track; they distinguish implemented behavior from deferred work and
-never claim a private commit as public source.
+- [Install and first run](/get-started/install/) — install and start the `tea`
+  CLI/TUI.
+- [Using the TUI](/cli/tui/) — prompts, tools, approvals, and sessions.
+- [SDK Quick Start](/sdk/quick-start/) — add a minimal agent to a new Rust app.
+- [Overview](/overview/) — architecture, dependency direction, and design
+  lineage.
+- [Security boundaries](/safety/security/) — read this before trusting a
+  workspace or enabling tools.

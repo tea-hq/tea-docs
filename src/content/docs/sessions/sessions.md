@@ -3,8 +3,6 @@ title: Sessions and recovery
 description: Durable SQLite sessions, branch/fork semantics, what survives restart, and backup guidance.
 ---
 
-> **Track:** `next` pre-release.
-
 Durable sessions are stored in SQLite and reconstructed from canonical
 append-only records. The TUI transcript, branch tree, statistics, and RPC views
 are projections; none is a second source of truth.

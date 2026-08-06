@@ -1,72 +1,65 @@
 ---
 title: Model providers
-description: The provider-neutral model port — ModelSpec, ModelRequest, the streaming grammar, and how to implement a ModelProvider adapter.
+description: Connect Tea to an OpenAI-compatible or Anthropic model endpoint.
 ---
 
-> **Track:** `next` pre-release.
+Tea's agent API accepts any implementation of `ModelProvider`. The concrete
+adapter is a separate dependency selected by your application.
 
-`tea-model` is the provider-neutral model layer. It contains no live provider
-adapter, HTTP client, credentials, retry loop, agent loop, or persistence
-implementation. The public API intentionally contains no OpenAI, Anthropic,
-Vercel AI SDK, HTTP, SSE, or WebSocket types.
+## OpenAI-compatible
 
-## Responsibilities
+```sh
+cargo add tea-provider-openai
+```
 
-- validated `ModelSpec` values and capability declarations;
-- immutable provider-neutral `ModelRequest` turn snapshots;
-- model-visible tool names, descriptions, and bounded object JSON Schemas;
-- provider-neutral reasoning effort and budget;
-- project-owned cooperative `ModelCancellation`;
-- normalized model events, failures, stop reasons, usage, and exact cost;
-- object-safe `ModelProvider` and `ModelStream` ports;
-- deterministic stream grammar validation.
+```rust
+let config = OpenAiConfig::new(
+    "gpt-4o-mini".parse()?,
+    "https://api.openai.com/v1",
+    ApiKey::new("YOUR_API_KEY")?,
+)?;
+let provider = OpenAiProviderBuilder::new()
+    .with_config(Arc::new(config))
+    .build()?;
+```
 
-## Stream grammar
+This adapter supports OpenAI and gateways that implement the selected
+OpenAI-compatible API mode. Keep `api_key`, `model`, and `base_url` in your
+application's configuration layer rather than coupling the rest of the product
+to provider-specific environment names.
 
-A fully consumed conforming stream:
+## Anthropic
 
-1. emits exactly one `Started` event first;
-2. emits zero or more text, thinking, and tool-call events;
-3. emits exactly one terminal `Completed` or `Failed` event;
-4. emits nothing after termination.
+```sh
+cargo add tea-provider-anthropic
+```
 
-Tool calls use a response-local bounded index and an opaque provider call ID. A
-tool index cannot be reused in one response. Argument deltas are incomplete
-strings and are never executable; only `ToolCallCompleted` carries parsed, bounded
-JSON object arguments. Successful termination is rejected while any tool call
-remains incomplete. Cancellation and provider/runtime errors use typed terminal
-`Failed` events; raw HTTP bodies, credentials, and SDK errors are not stored in
-`ModelFailure`.
+The Anthropic adapter can receive application-owned values through its
+map-backed resolver:
 
-## Cancellation and ownership
+```rust
+let values = std::collections::BTreeMap::from([
+    ("TEA_ANTHROPIC_API_KEY".to_owned(), "YOUR_API_KEY".to_owned()),
+    ("TEA_ANTHROPIC_MODEL".to_owned(), "claude-3-5-sonnet-latest".to_owned()),
+]);
+let provider = AnthropicProviderBuilder::new()
+    .with_resolver(Arc::new(MapCredentialResolver::new(values)))
+    .build()?;
+```
 
-`ModelCancellation` is the project-owned cooperative scope shared with the tool
-runtime; it wraps Tokio-util internally without exposing `CancellationToken`.
-Providers receive cancellation separately from the immutable request. Streams are
-lazy and own their resources; implementations must not create nested runtimes or
-detached tasks. Dropping a stream abandons it; explicit cancellation is
-cooperative.
+Applications with their own configuration service can inject a custom
+`CredentialResolver` instead. The map values above are only example strings;
+replace the API key with a secret from the application's configuration layer.
 
-## Implementing an adapter
+## Pass the provider to Tea
 
-A future provider adapter must:
+Both adapters expose the same provider-neutral model catalog:
 
-- translate canonical messages and tool schemas;
-- validate requests against advertised model capabilities;
-- normalize streaming output and failures;
-- preserve provider continuation signatures only behind bounded, namespaced
-  metadata;
-- normalize usage, exact cost, and stop reasons;
-- report setup and streaming failures as terminal events rather than panics;
-- pass the `tea-testkit` conformance utilities using mocked transports before any
-  live API test.
+```rust
+let model = provider.models()[0].model_ref().clone();
+let agent = AgentSession::builder(Arc::new(provider), model).build().await?;
+```
 
-Implement `tea_model::ModelProvider` in a separate adapter crate. The kernel is
-responsible for agent-level retries and must not inspect raw HTTP payloads.
-
-## Reference providers
-
-The `ScriptedModelProvider` in `tea-testkit` is the hermetic reference provider
-for embeddings and products. The OpenAI-compatible adapter maps the Chat
-Completions SSE surface without making the facade depend on OpenAI types or
-credentials; its live smoke is opt-in and never a normal CI gate.
+Provider HTTP values, SDK errors, and continuation payloads do not enter Tea's
+stable core messages. Add a new protocol by implementing `ModelProvider` in a
+separate adapter crate.

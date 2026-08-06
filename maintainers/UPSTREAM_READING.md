@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This checklist keeps public documentation accurate without giving the site build
+This checklist keeps public documentation accurate without giving the documentation build
 or published repository a dependency on the authoritative product workspace.
 Perform it locally before authoring or approving a technical page.
 
@@ -14,8 +14,9 @@ Perform it locally before authoring or approving a technical page.
    direction.
 3. Read the relevant crate README files for the public API or integration
    surface being described.
-4. For CLI, workspace, or automation topics, read the applicable guides under
-   `docs/cli/` and `docs/mcp/`.
+4. For CLI, TUI, workspace, or automation topics, read the applicable
+   `tea-cli`, `tea-coding`, and `tea-mcp` crate READMEs plus the exact source
+   contracts named by the page-to-source map.
 5. For compatibility, persistence, or release assertions, read the applicable
    material under `docs/1.0-*`, `docs/migrations/`, and `docs/RELEASING.md`.
 6. For a user-visible safety statement, read the applicable public-safe guidance
@@ -42,7 +43,7 @@ and ask the product maintainers to reconcile the authoritative material first.
 
 Before approval, verify that the proposed page:
 
-- labels a released version or the `next` track;
+- labels the released version or an explicitly reviewed pre-release track;
 - has an equivalent English or Simplified Chinese counterpart when the page is
   translated;
 - contains no local paths, source-history details, secrets, or internal-only

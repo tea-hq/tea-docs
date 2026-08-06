@@ -2,38 +2,39 @@
 title: Tea
 description: 一个无头、与产品无关的 Rust 智能体运行时，用于嵌入 CLI、桌面应用、服务和 IDE 集成。
 hero:
-  tagline: 一个可嵌入的无头 Rust 智能体运行时。
+  tagline: 使用与提供商无关的 SDK 构建应用，或直接在 Tea TUI 中工作。
   actions:
-    - text: 快速开始
+    - text: 安装 Tea
       link: /zh/get-started/install/
       variant: primary
-    - text: 概览
-      link: /zh/overview/
+    - text: SDK 快速开始
+      link: /zh/sdk/quick-start/
 ---
 
-> **轨道：** 本站处于 `next` 预发布轨道。目前尚未公告任何公开的 crate 或二进制发布。
-
-Tea 是一个用 Rust 实现的无头、与产品无关的智能体运行时。本站记录 tea-rs——Tea 的 Rust 实现，
-旨在嵌入桌面应用、CLI、服务、IDE
-集成及未来的产品线。该项目拥有规范的智能体协议、与提供商无关的模型端口、可移植的工具契约、
+Tea 是一个用 Rust 实现的无头、与产品无关的 Agent 运行时。它可以嵌入桌面应用、CLI、服务和 IDE
+集成，也可以直接通过 Tea 的终端界面使用。Tea 拥有规范的 Agent 协议、与 Provider 无关的模型端口、可移植的工具契约、
 纯粹的策略与持久化审批模型、仅追加的分支会话，以及可恢复的 Tokio 原生内核。
 
-## 你可以用它做什么
+## 选择使用路径
 
-- 以显式的、持久化的状态转换运行模型–工具循环。
-- 通过一套规范事件协议流式输出文本、思考、工具活动、用量与成本。
-- 通过有序策略与持久化、有界的审批评估每一次敏感的工具调用。
-- 将可恢复、可压缩、可分支的会话持久化到 SQLite。
-- 以交互、脚本或严格的 JSONL/RPC 接口驱动同一运行时。
+### CLI 与 TUI
+
+在终端中交互式使用 `tea` 编码智能体，也可以通过 print 模式运行一次性任务、消费规范 JSON
+事件，或使用 JSONL/RPC 集成。四种模式共享同一个编码服务、策略引擎和会话模型。
+
+[安装 Tea](/zh/get-started/install/)，然后了解 [TUI 工作流](/zh/cli/tui/)。
+
+### SDK
+
+通过 `AgentSession` 将智能体嵌入 Rust 应用；当宿主需要规范命令、流式事件、持久化存储、审批、
+多个 Profile 或自定义适配器时，使用 `AgentRuntime`。
+
+[从最小 SDK 示例开始](/zh/sdk/quick-start/)。
 
 ## 从哪里开始
 
-- [概览](/zh/overview/) —— 分层、依赖方向与内核循环。
-- [快速开始](/zh/get-started/install/) —— 构建 `tea` CLI 与首次运行。
-- [CLI 模式](/zh/get-started/cli-modes/) —— 交互、print、JSON 事件与 RPC。
-- [安全与运维边界](/zh/safety/security/) —— 信任工作区前请先阅读。
-
-## 状态
-
-Tea 处于预发布 `next` 开发阶段。源码分发、crate 发布与二进制发布尚未公开。本站页面描述
-`next` 轨道，区分已实现行为与推迟工作，且不会将私有提交声称为公开源码。
+- [安装与首次运行](/zh/get-started/install/) —— 安装并启动 `tea` CLI/TUI。
+- [使用 TUI](/zh/cli/tui/) —— Prompt、工具、审批与会话。
+- [SDK 快速开始](/zh/sdk/quick-start/) —— 在新的 Rust 应用中接入最小 Agent。
+- [概览](/zh/overview/) —— 架构、依赖方向与设计来源。
+- [安全边界](/zh/safety/security/) —— 信任工作区或启用工具前请先阅读。

@@ -1,13 +1,14 @@
 ---
 title: Configuration
-description: Settings precedence, application paths, and the settings file format for the tea CLI.
+description: Configure the Tea CLI, TUI, tools, and application paths.
 ---
 
-> **Track:** `next` pre-release.
+Most users can start with flags and add a settings file only for choices they
+want to keep.
 
 ## Precedence
 
-Settings are resolved deterministically in this order, from highest to lowest:
+Tea resolves configuration from highest to lowest priority:
 
 1. CLI flags
 2. `TEA_*` environment values
@@ -15,72 +16,43 @@ Settings are resolved deterministically in this order, from highest to lowest:
 4. global `settings.json`
 5. built-in defaults
 
-Nested `tui` and `resources` objects merge by field. `activeTools` replaces the
-list instead of extending it. Unknown fields and unsupported schema versions fail
-closed. Project configuration can never choose the host-owned session database
-path.
+Nested objects merge by field. `activeTools` replaces the list. Unknown fields
+and unsupported schema versions are rejected. A workspace file cannot select
+the host-owned session database path.
 
-## Application paths
+## Global settings
 
-The defaults below are relative to the process home directory:
-
-| Purpose | Default | Override |
-| --- | --- | --- |
-| Global config | `~/.config/tea` | `--config-dir`, `TEA_CONFIG_DIR` |
-| Durable state | `~/.local/state/tea` | `--state-dir`, `TEA_STATE_DIR` |
-| Global resources | `~/.local/share/tea` | `--data-dir`, `TEA_DATA_DIR` |
-
-The global settings file is `<config-dir>/settings.json`. Durable sessions use
-`<state-dir>/sessions.sqlite3`, project trust uses
-`<state-dir>/project-trust.json`, and oversized shell output is retained below
-`<state-dir>/bash-output/`. Tests and automation should pass all three directory
-flags so they never read a real user home.
-
-## Settings format
-
-Settings files are sparse JSON overlays with `schemaVersion: 1`:
+The default global file is `~/.tea/settings.json`. Settings are sparse, so keep
+only values you intend to override:
 
 ```json
 {
   "schemaVersion": 1,
   "provider": "openai",
-  "model": "gpt-5.4",
-  "thinking": "medium",
+  "model": "gpt-4o-mini",
   "activeTools": ["read", "write", "edit", "bash"],
-  "maxRetries": 2,
-  "compactionEnabled": false,
-  "projectTrust": "ask",
   "tui": {
-    "viewport": "fullscreen",
-    "collapseThinking": false,
-    "submitKey": "enter",
-    "newlineKey": "shift+enter",
-    "abortKey": "escape"
-  },
-  "resources": {
-    "contextFiles": true,
-    "skillPaths": [],
-    "promptTemplates": true
+    "viewport": "inline",
+    "collapseThinking": true
   }
 }
 ```
 
-Supported `projectTrust` values are `ask`, `ignore`, and `reject`. The TUI also
-accepts `viewport: "inline"`; fullscreen is the default and best-tested mode.
+The default tools are `read`, `write`, `edit`, and `bash`. `viewport` accepts
+`inline` or `fullscreen`; `inline` is the default.
 
-## Project trust and resources
+## Application paths
 
-The presence of `AGENTS.md`, `CLAUDE.md`, or `.tea/` marks a workspace as having
-project-local resources. Before trust, the CLI does not load project settings,
-skills, or prompt templates.
+| Purpose | Default | Override |
+| --- | --- | --- |
+| Global config | `~/.tea` | `--config-dir`, `TEA_CONFIG_DIR` |
+| Durable state | `~/.local/state/tea` | `--state-dir`, `TEA_STATE_DIR` |
+| Global resources | `~/.local/share/tea` | `--data-dir`, `TEA_DATA_DIR` |
 
-| Flag | Behavior |
-| --- | --- |
-| `--trust default` | Use a saved decision; otherwise headless use fails closed |
-| `--trust once` | Load project resources for this invocation only |
-| `--trust persist` | Save trust for the canonical workspace identity |
-| `--trust reject` | Reject project-local resources |
-| `--trust ignore` | Continue without project-local resources |
+Sessions use `<state-dir>/sessions.sqlite3`; trust decisions use
+`<state-dir>/project-trust.json`. Tests and automation should pass all three
+directory flags to avoid reading a real user profile.
 
-Trust permits loading text; it does not make the text safe. See
-[Workspace trust](/safety/trust/) and [Security](/safety/security/).
+See the [CLI configuration reference](/configuration/cli-config-reference/)
+for all fields and [Credentials and models](/configuration/credentials/) for
+custom endpoints.

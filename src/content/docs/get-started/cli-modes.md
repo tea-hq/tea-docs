@@ -3,8 +3,6 @@ title: CLI modes and commands
 description: Interactive, print, JSON event, and JSONL/RPC modes of the tea CLI, plus slash commands and exit codes.
 ---
 
-> **Track:** `next` pre-release.
-
 Run `tea --help` for the authoritative flag list. Mode flags are mutually
 exclusive; an interactive terminal selects the TUI by default, while piped stdin
 selects print mode.
@@ -82,9 +80,13 @@ reconnect behavior.
 | `/session` | Open the session selector |
 | `/name [text]` | Set or clear the selected session name |
 | `/model [model-id]` | Select a model or open the model selector |
+| `/reasoning [level]` | Select reasoning effort or open its selector |
 | `/compact` | Compact through the configured summarizer |
 | `/tree` | Open the append-only branch tree |
 | `/fork <message-id>` | Fork and activate a branch from a durable message |
+| `/image <path>` | Attach an explicit workspace image |
+| `/image remove <index>` | Remove one composer attachment |
+| `/image clear` | Remove all composer attachments |
 | `/copy` | Copy the latest assistant response |
 | `/mcp` | Show safe MCP health and frozen local aliases |
 | `/mcp reconnect <server-id>` | Reconnect one server only when discovery matches its frozen catalog |
@@ -92,6 +94,8 @@ reconnect behavior.
 | `/quit` | Restore the terminal and exit |
 
 MCP reconnect never changes a live registry and never replays an in-flight call.
+See [Using the TUI](/cli/tui/) for the timeline, composer, approval, selector,
+and keyboard workflow.
 
 ## Exit codes
 

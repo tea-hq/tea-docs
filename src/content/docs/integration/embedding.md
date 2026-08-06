@@ -1,67 +1,48 @@
 ---
-title: Embedding and profiles
-description: Wire Tea into a product through AgentRuntimeBuilder, AgentProfile, and the in-process command/event API.
+title: Embed Tea
+description: Keep an agent session in your application and choose when to move to the lower-level runtime.
 ---
 
-> **Track:** `next` pre-release.
+Start with [`AgentSession`](/sdk/quick-start/). Keep the session alive for as
+long as the conversation should retain context:
 
-`tea` is the ergonomic embedding facade. It owns replaceable inward-facing ports
-— model provider, tool registry, policy engine, session store, clock, ID source,
-event sink, context providers, and prompt compiler — and exposes an in-process
-command sender, bounded event subscription, session snapshots, and health
-inspection. It contains no product prompt, live provider, UI, filesystem,
-process, network, or database adapter.
+```rust
+let agent = AgentSession::builder(Arc::new(provider), model)
+    .system_prompt("Answer with short, actionable steps.")
+    .build()
+    .await?;
 
-## Runtime builder
-
-`AgentRuntimeBuilder` wires the model, tools, policy rules, session store,
-context providers, clock, ID source, and prompt compiler, then registers one or
-more `AgentProfile` values. At `build`, the runtime precomputes one immutable
-`ProfileBinding` per profile: a filtered `ToolRegistry` of the profile's active
-tools, a `PolicyEngine` composed from the profile's resolved rules plus the
-platform `UnknownEffectPolicy`, an ordered context-provider list, and converted
-`RunLimits` and `PromptBudget`.
-
-A profile is a declarative, versioned, serializable description. The runtime
-resolves its tool and policy-rule references against builder-owned registrations;
-an unresolved reference fails construction. The kernel remains product-agnostic:
-the runtime constructs a fresh `AgentKernel` borrowing runtime-owned ports for
-the duration of one async invocation.
-
-## Commands and events
-
-`AgentRuntime::send` accepts a canonical `CommandEnvelope` and dispatches
-`CreateSession`, `Prompt`, `Steer`, `FollowUp`, `Abort`, `ResolveApproval`,
-`SetModel`, `SetProfile`, `CompactSession`, and `ForkSession`.
-`subscribe(session_id)` returns a bounded receiver of `EventEnvelope` values; a
-full channel applies backpressure to the run, and a dropped receiver is removed.
-
-`attach_session` validates stored profile/model compatibility. `snapshot`,
-`session_state`, `session_stats`, and `health` expose immutable host queries
-without creating a second authoritative transcript.
-
-The runtime never creates a Tokio runtime, calls `block_on`, sleeps in tests, or
-uses wall-clock entropy. Use the embedder's active runtime.
-
-## Examples
-
-The provider-free embedding path uses only the scripted provider and the
-in-memory session store — no credential or network:
-
-```bash
-cargo run --example in_process -p tea
+let first = agent.prompt("Review this API shape.").await?;
+let second = agent.prompt("Now suggest a smaller version.").await?;
 ```
 
-The `two_profiles` example composes coding and desktop profiles over the same
-runtime, including native-tool declarations and approval behavior:
+Each `prompt` waits for the completed response and returns aggregated visible
+text. The session is in memory; dropping it ends that conversation.
 
-```bash
-cargo run --example two_profiles -p tea
+## Set host identities
+
+Applications with multiple users or workspaces should supply stable identities:
+
+```rust
+let agent = AgentSession::builder(Arc::new(provider), model)
+    .actor("user:42".parse()?)
+    .workspace("workspace:docs".parse()?)
+    .build()
+    .await?;
 ```
 
-## Boundary
+These identities flow into policy and session context. Do not put secrets or
+display names in them.
 
-The facade never provides a concrete provider, UI, filesystem, process, network,
-or database adapter. Adapter and product-specific types stay outside stable-core
-APIs. The supported adapter, host, storage, and MCP surface is fixed by the
-compatibility matrix; see [Protocol and RPC boundary](/integration/protocol-rpc/).
+## Choose the API level
+
+| Use | When |
+| --- | --- |
+| `AgentSession` | One in-memory conversation, plain-text prompts, final aggregated responses. |
+| `AgentRuntime` | Streamed events, durable stores, approvals, multiple profiles, steering, follow-ups, or custom runtime ports. |
+
+Tea uses the Tokio runtime already owned by your application. It never creates
+a nested runtime or calls `block_on`.
+
+Next, add [tools and policy](/integration/tools-policy/) or a
+[durable session store](/integration/session-stores/).

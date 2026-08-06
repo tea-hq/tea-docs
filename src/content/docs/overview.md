@@ -3,27 +3,43 @@ title: Overview
 description: Layers, dependency direction, the kernel state machine, and the canonical protocol of Tea.
 ---
 
-> **Track:** `next` pre-release.
-
 Tea owns agent semantics while treating model providers, tools,
 persistence, policy, and user interfaces as replaceable adapters. It is not a
 chat UI library, an LLM HTTP client, or a coding-agent product — those can be
 built on top of it.
 
+## Design lineage
+
+Tea's agent architecture is inspired by [Pi](https://pi.dev/docs/latest/sdk): a
+small session API, a provider-independent agent loop, replaceable provider and
+tool adapters, and one engine beneath multiple product surfaces. Tea adds its
+own Rust contracts for durable approvals, append-only sessions, policy, and
+canonical commands and events.
+
+The terminal interaction is inspired by the
+[OpenAI Codex](https://github.com/openai/codex) TUI: semantic timeline cells, a
+stable bottom composer, compact tool lifecycle rows, follow-tail scrolling, and
+focused approval overlays.
+
+Tea is an independent implementation. It does not claim source, API, wire, or
+product compatibility with either reference.
+
 ## Layers
 
-```text
-Product surface (CLI / desktop / service / IDE)
-                    |
-               Agent protocol
-                    |
-              Product profile
-                    |
-                Agent kernel
-          /         |          \
-    Model port   Tool runtime   Session port
-                    |
-               Policy engine
+```mermaid
+flowchart TB
+    Hosts[CLI · desktop · service · IDE] --> Facade[tea facade]
+    Facade --> Profile[Product profile]
+    Facade --> Kernel[Agent kernel]
+    Kernel --> Model[Model port]
+    Kernel --> Tools[Tool runtime]
+    Kernel --> Policy[Policy engine]
+    Kernel --> Session[Session port]
+    Kernel --> Protocol[Canonical protocol]
+
+    Providers[Provider adapters] -. implement .-> Model
+    Executors[Native and MCP adapters] -. implement .-> Tools
+    Stores[In-memory and SQLite stores] -. implement .-> Session
 ```
 
 Dependencies point inward. Inner crates never depend on a UI framework, a
@@ -46,10 +62,21 @@ Provider-specific payloads never appear in stable core fields.
 
 The kernel is an explicit state machine rather than a recursive chat helper:
 
-```text
-Idle -> PreparingContext -> StreamingModel -> PlanningToolCalls
-  -> EvaluatingPolicy -> WaitingApproval -> ExecutingTools
-  -> CommittingTurn -> Completed | Failed
+```mermaid
+flowchart LR
+    Idle --> Context[Preparing context]
+    Context --> Model[Streaming model]
+    Model --> Plan[Planning tool calls]
+    Plan --> Policy[Evaluating policy]
+    Policy --> Approval[Waiting approval]
+    Policy --> Tools[Executing tools]
+    Approval --> Tools
+    Tools --> Commit[Committing turn]
+    Commit --> Context
+    Commit --> Completed
+    Context --> Failed
+    Model --> Failed
+    Tools --> Failed
 ```
 
 Key invariants:
@@ -87,9 +114,8 @@ Recovery restarts only from durable boundaries. A tool interrupted after side
 effects begin is recorded as uncertain and is never replayed automatically
 unless its executor declares and implements a safe recovery strategy.
 
-## What is deferred
+## Current scope
 
-The first stable release will not include autonomous multi-agent orchestration,
-a plugin marketplace, vector database memory, browser automation, arbitrary
-in-process dynamic libraries, or distributed scheduling. See the project
-roadmap for the authoritative deferral list.
+Tea does not include autonomous multi-agent orchestration, a plugin
+marketplace, vector-database memory, browser automation, arbitrary in-process
+dynamic libraries, or distributed scheduling.
