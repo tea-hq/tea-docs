@@ -3,7 +3,7 @@ title: Embed Tea
 description: Keep an agent session in your application and choose when to move to the lower-level runtime.
 ---
 
-Start with [`AgentSession`](/sdk/quick-start/). Keep the session alive for as
+Start with [`AgentSession`](/tea-docs/sdk/quick-start/). Keep the session alive for as
 long as the conversation should retain context:
 
 ```rust
@@ -44,5 +44,5 @@ display names in them.
 Tea uses the Tokio runtime already owned by your application. It never creates
 a nested runtime or calls `block_on`.
 
-Next, add [tools and policy](/integration/tools-policy/) or a
-[durable session store](/integration/session-stores/).
+Next, add [tools and policy](/tea-docs/integration/tools-policy/) or a
+[durable session store](/tea-docs/integration/session-stores/).

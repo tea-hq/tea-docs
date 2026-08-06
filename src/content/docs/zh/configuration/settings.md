@@ -49,5 +49,5 @@ Tea 按以下顺序解析配置，越靠前优先级越高：
 会话位于 `<state-dir>/sessions.sqlite3`，信任决策位于 `<state-dir>/project-trust.json`。测试和自动化
 应显式传入三个目录参数，避免读取真实用户配置。
 
-所有字段见 [CLI 配置参考](/zh/configuration/cli-config-reference/)，自定义端点见
-[凭据与模型](/zh/configuration/credentials/)。
+所有字段见 [CLI 配置参考](/tea-docs/zh/configuration/cli-config-reference/)，自定义端点见
+[凭据与模型](/tea-docs/zh/configuration/credentials/)。

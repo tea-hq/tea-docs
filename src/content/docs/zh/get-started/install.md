@@ -49,4 +49,4 @@ tea --provider openai --model gpt-4o-mini --api-key $env:TEA_API_KEY --new
 TUI 会在当前目录打开。若工作区包含项目级指令或 `.tea` 配置，Tea 会在加载前询问。默认工具为
 `read`、`write`、`edit` 和 `bash`；变更操作可能暂停并请求审批。
 
-接下来阅读[使用 TUI](/zh/cli/tui/)，或在[凭据与模型](/zh/configuration/credentials/)中配置其他端点。
+接下来阅读[使用 TUI](/tea-docs/zh/cli/tui/)，或在[凭据与模型](/tea-docs/zh/configuration/credentials/)中配置其他端点。

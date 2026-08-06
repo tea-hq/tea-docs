@@ -62,7 +62,7 @@ tea --rpc --continue --trust ignore
 ```
 
 RPC 仅通过请求帧接收提示。成帧、请求类型、边界与重连行为见
-[JSONL/RPC 协议](/zh/automation/rpc/)。
+[JSONL/RPC 协议](/tea-docs/zh/automation/rpc/)。
 
 ## 斜杠命令
 
@@ -87,7 +87,7 @@ RPC 仅通过请求帧接收提示。成帧、请求类型、边界与重连行�
 | `/quit` | 恢复终端并退出 |
 
 MCP 重连绝不改变实时注册表，也绝不回放进行中的调用。
-时间线、编辑器、审批、选择器和按键工作流见[使用 TUI](/zh/cli/tui/)。
+时间线、编辑器、审批、选择器和按键工作流见[使用 TUI](/tea-docs/zh/cli/tui/)。
 
 ## 退出码
 

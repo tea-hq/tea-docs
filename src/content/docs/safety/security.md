@@ -19,13 +19,13 @@ Repository text is model input. `AGENTS.md`, `CLAUDE.md`, source files,
 documentation, `.tea/settings.json`, prompt templates, and `SKILL.md` content
 may attempt to override instructions or induce unsafe tool use. Project trust
 only controls whether local configuration/resources are loaded; it does not
-validate their intent. See [Workspace trust](/safety/trust/).
+validate their intent. See [Workspace trust](/tea-docs/safety/trust/).
 
 ## Credentials and data
 
 Provider credentials are resolved from `TEA_*` environment values and are not
 written to resolved settings, events, sessions, SQLite, archives, fixtures, or
-normal errors. See [Credentials](/configuration/credentials/).
+normal errors. See [Credentials](/tea-docs/configuration/credentials/).
 
 ## Tool boundaries
 
@@ -46,7 +46,7 @@ An MCP stdio server is untrusted executable code. Global configuration or
 project trust authorizes discovery and startup, and a tool approval authorizes
 one host-declared call. Neither decision limits the server's host filesystem,
 network, CPU, process, or external-service authority. See
-[MCP configuration](/mcp/configuration/).
+[MCP configuration](/tea-docs/mcp/configuration/).
 
 ## Terminal and automation
 

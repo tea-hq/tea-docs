@@ -44,5 +44,5 @@ Before `--trust once` or `--trust persist`:
 4. Deny broad shell commands or commands that read ambient credentials.
 5. Review Git changes and test output before keeping a mutation.
 
-See [Approvals](/safety/approvals/) and
-[Security](/safety/security/).
+See [Approvals](/tea-docs/safety/approvals/) and
+[Security](/tea-docs/safety/security/).

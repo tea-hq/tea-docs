@@ -51,5 +51,5 @@ instructions or `.tea` configuration, Tea asks before loading them. The default
 tools are `read`, `write`, `edit`, and `bash`; mutating operations can pause for
 approval.
 
-Continue with [Using the TUI](/cli/tui/) or configure another endpoint in
-[Credentials and models](/configuration/credentials/).
+Continue with [Using the TUI](/tea-docs/cli/tui/) or configure another endpoint in
+[Credentials and models](/tea-docs/configuration/credentials/).

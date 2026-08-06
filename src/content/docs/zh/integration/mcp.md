@@ -32,4 +32,4 @@ Tea 当前支持显式配置的本地 stdio Server。可执行文件必须使用
 MCP Server 是不可信可执行代码。进程生命周期管理不是隔离，批准一次工具调用也不会限制 Server
 拥有的其他文件系统、网络、CPU 或账户权限。当这些权限不可接受时，请使用外部隔离边界。
 
-需要现成的 CLI 接入方式时，请阅读 [MCP 配置](/zh/mcp/configuration/)。
+需要现成的 CLI 接入方式时，请阅读 [MCP 配置](/tea-docs/zh/mcp/configuration/)。

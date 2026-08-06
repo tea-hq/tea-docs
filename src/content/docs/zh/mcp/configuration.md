@@ -53,4 +53,4 @@ Tea 才会启用远程工具。本地 Alias 还必须出现在 `activeTools` 中
 重放。
 
 当服务器的文件系统、网络、CPU 或外部服务权限过大时，请使用受限账户、容器或虚拟机。见
-[安全边界](/zh/safety/security/)。
+[安全边界](/tea-docs/zh/safety/security/)。

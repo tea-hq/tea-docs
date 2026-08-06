@@ -53,6 +53,6 @@ Sessions use `<state-dir>/sessions.sqlite3`; trust decisions use
 `<state-dir>/project-trust.json`. Tests and automation should pass all three
 directory flags to avoid reading a real user profile.
 
-See the [CLI configuration reference](/configuration/cli-config-reference/)
-for all fields and [Credentials and models](/configuration/credentials/) for
+See the [CLI configuration reference](/tea-docs/configuration/cli-config-reference/)
+for all fields and [Credentials and models](/tea-docs/configuration/credentials/) for
 custom endpoints.

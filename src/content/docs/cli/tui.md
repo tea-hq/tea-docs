@@ -11,7 +11,7 @@ coding service, policy engine, canonical session state, and SQLite store.
 tea --cwd /path/to/project --new
 ```
 
-Read [installation and first run](/get-started/install/) before starting Tea in
+Read [installation and first run](/tea-docs/get-started/install/) before starting Tea in
 a new workspace.
 
 ## Screen model
@@ -77,8 +77,8 @@ arguments. Inspect the request before choosing allow once, a bounded session
 grant, or deny. `Escape` never silently denies an approval.
 
 An approval authorizes the recorded operation; it does not sandbox native tools
-or MCP servers. Read [Approvals and grants](/safety/approvals/) and
-[Security boundaries](/safety/security/) before enabling mutating tools.
+or MCP servers. Read [Approvals and grants](/tea-docs/safety/approvals/) and
+[Security boundaries](/tea-docs/safety/security/) before enabling mutating tools.
 
 ## Sessions and recovery
 
@@ -87,9 +87,9 @@ branch selector. Switching keeps the current draft until submission. Pending
 approvals and canonical records survive restart; ephemeral steering and
 follow-up display queues do not.
 
-Continue with [Sessions and recovery](/sessions/sessions/),
-[CLI modes and commands](/get-started/cli-modes/), and
-[Configuration](/configuration/settings/).
+Continue with [Sessions and recovery](/tea-docs/sessions/sessions/),
+[CLI modes and commands](/tea-docs/get-started/cli-modes/), and
+[Configuration](/tea-docs/configuration/settings/).
 
 ## Design influence
 

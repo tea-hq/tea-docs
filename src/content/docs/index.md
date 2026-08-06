@@ -5,10 +5,10 @@ hero:
   tagline: Build with the provider-neutral SDK or work directly in the Tea TUI.
   actions:
     - text: Install Tea
-      link: /get-started/install/
+      link: /tea-docs/get-started/install/
       variant: primary
     - text: SDK Quick Start
-      link: /sdk/quick-start/
+      link: /tea-docs/sdk/quick-start/
 ---
 
 Tea is a headless, product-agnostic agent runtime implemented in Rust. It can be
@@ -26,8 +26,8 @@ Use the `tea` coding agent interactively in a terminal, run one-shot prompts in
 print mode, consume canonical JSON events, or integrate through JSONL/RPC. All
 four modes share one coding service, policy engine, and session model.
 
-[Install Tea](/get-started/install/), then learn the
-[TUI workflow](/cli/tui/).
+[Install Tea](/tea-docs/get-started/install/), then learn the
+[TUI workflow](/tea-docs/cli/tui/).
 
 ### SDK
 
@@ -35,15 +35,15 @@ Embed an agent in a Rust application through `AgentSession`, or use
 `AgentRuntime` when the host needs canonical commands, streamed events, durable
 storage, approvals, multiple profiles, and custom adapters.
 
-[Start with the minimal SDK example](/sdk/quick-start/).
+[Start with the minimal SDK example](/tea-docs/sdk/quick-start/).
 
 ## Where to start
 
-- [Install and first run](/get-started/install/) — install and start the `tea`
+- [Install and first run](/tea-docs/get-started/install/) — install and start the `tea`
   CLI/TUI.
-- [Using the TUI](/cli/tui/) — prompts, tools, approvals, and sessions.
-- [SDK Quick Start](/sdk/quick-start/) — add a minimal agent to a new Rust app.
-- [Overview](/overview/) — architecture, dependency direction, and design
+- [Using the TUI](/tea-docs/cli/tui/) — prompts, tools, approvals, and sessions.
+- [SDK Quick Start](/tea-docs/sdk/quick-start/) — add a minimal agent to a new Rust app.
+- [Overview](/tea-docs/overview/) — architecture, dependency direction, and design
   lineage.
-- [Security boundaries](/safety/security/) — read this before trusting a
+- [Security boundaries](/tea-docs/safety/security/) — read this before trusting a
   workspace or enabling tools.

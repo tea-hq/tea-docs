@@ -45,4 +45,4 @@ RPC stdout 只包含 Frame，诊断写入 stderr。Prompt 命令先返回 `comma
 | `AgentRuntime` | 完整的进程内命令、事件、存储与审批。 |
 | `tea --rpc` | 与语言无关的本地进程集成。 |
 
-完整请求格式见 [JSONL/RPC 请求参考](/zh/automation/rpc/)。
+完整请求格式见 [JSONL/RPC 请求参考](/tea-docs/zh/automation/rpc/)。

@@ -128,13 +128,13 @@ tea [--print | --json | --rpc] [OPTIONS] [PROMPT]...
 | 显示 | `NO_COLOR`、`TERM=dumb` |
 
 适配器还提供超时、Reasoning、Header 与 Hosted Tool 变量；自定义端点有多个长期配置时，优先使用
-[`providers.json`](/zh/configuration/credentials/)。
+[`providers.json`](/tea-docs/zh/configuration/credentials/)。
 
 ## 项目资源
 
 包含 `AGENTS.md`、`CLAUDE.md` 或 `.tea/` 的工作区拥有项目资源。Tea 会在加载
 `.tea/settings.json`、`.tea/providers.json`、Skill 或 Prompt 模板前询问。`--trust ignore` 不加载
 这些资源；`--trust once` 只加载一次；`--trust persist` 保存信任决策。见
-[工作区信任](/zh/safety/trust/)。
+[工作区信任](/tea-docs/zh/safety/trust/)。
 
-MCP 还要求额外的安全声明，见 [MCP 配置](/zh/mcp/configuration/)。
+MCP 还要求额外的安全声明，见 [MCP 配置](/tea-docs/zh/mcp/configuration/)。

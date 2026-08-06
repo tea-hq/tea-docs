@@ -9,7 +9,7 @@ description: 为 Agent 添加工作区工具，并理解默认授权边界。
 cargo add tea-coding-tools
 ```
 
-在[快速开始](/zh/sdk/quick-start/)中构建会话之前增加：
+在[快速开始](/tea-docs/zh/sdk/quick-start/)中构建会话之前增加：
 
 ```rust
 let workspace = WorkspaceRoot::new(".")?;

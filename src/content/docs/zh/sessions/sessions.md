@@ -37,7 +37,7 @@ tea --no-session --print 'one temporary task'
 工具记录为不确定，且绝不自动回放。
 
 会话级授权不是工作区旁路。授权受执行者、配置、会话、工具与版本、效应、访问模式与持久化资源定位
-约束。见 [审批](/zh/safety/approvals/)。
+约束。见 [审批](/tea-docs/zh/safety/approvals/)。
 
 ## 压缩与分支
 

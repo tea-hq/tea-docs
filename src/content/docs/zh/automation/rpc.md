@@ -55,7 +55,7 @@ description: tea --rpc 的 stdin/stdout 自动化接口——成帧、请求、�
 持续分页直到返回尾部。不要从文本增量或 `command_finished` 推断持久转录状态。
 
 RPC 连接拥有其活动工作。断连取消该工作，但已提交的会话记录与挂起审批可从使用相同状态目录的新
-进程恢复。见 [会话与恢复](/zh/sessions/sessions/)。
+进程恢复。见 [会话与恢复](/tea-docs/zh/sessions/sessions/)。
 
 MCP 列表与重连响应仅暴露服务器 ID、生命周期状态、稳定健康码、描述符摘要、重启计数与冻结别名，
 绝不包含服务器描述、可执行/argv、环境值、stderr 或结果文本。

@@ -51,4 +51,4 @@ state from event timing.
 | `AgentRuntime` | Full in-process commands, events, stores, and approvals. |
 | `tea --rpc` | Language-neutral local process integration. |
 
-See the complete [JSONL/RPC request reference](/automation/rpc/).
+See the complete [JSONL/RPC request reference](/tea-docs/automation/rpc/).

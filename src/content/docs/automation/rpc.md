@@ -69,7 +69,7 @@ text deltas or `command_finished`.
 An RPC connection owns its active work. Disconnect cancels that work, but
 already committed session records and pending approvals remain recoverable from
 a new process using the same state directory. See
-[Sessions and recovery](/sessions/sessions/).
+[Sessions and recovery](/tea-docs/sessions/sessions/).
 
 MCP list and reconnect responses expose only server ID, lifecycle state, stable
 health code, descriptor digest, restart count, and frozen aliases. They never

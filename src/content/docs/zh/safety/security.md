@@ -14,12 +14,12 @@ description: tea 不是沙箱。原生执行、提示注入、凭据、工具边
 
 仓库文本是模型输入。`AGENTS.md`、`CLAUDE.md`、源文件、文档、`.tea/settings.json`、提示模板与
 `SKILL.md` 内容可能试图覆盖指令或诱导不安全工具使用。项目信任仅控制是否加载本地配置/资源，
-不校验其意图。见 [工作区信任](/zh/safety/trust/)。
+不校验其意图。见 [工作区信任](/tea-docs/zh/safety/trust/)。
 
 ## 凭据与数据
 
 提供商凭据从 `TEA_*` 环境值解析，不写入已解析设置、事件、会话、SQLite、归档、夹具或常规错误。
-见 [凭据](/zh/configuration/credentials/)。
+见 [凭据](/tea-docs/zh/configuration/credentials/)。
 
 ## 工具边界
 
@@ -34,7 +34,7 @@ description: tea 不是沙箱。原生执行、提示注入、凭据、工具边
 
 MCP stdio 服务器是不可信可执行代码。全局配置或项目信任授权发现与启动，工具审批授权一次宿主声
 明的调用。两者都不限制服务器的宿主文件系统、网络、CPU、进程或外部服务权限。见
-[MCP 配置](/zh/mcp/configuration/)。
+[MCP 配置](/tea-docs/zh/mcp/configuration/)。
 
 ## 终端与自动化
 

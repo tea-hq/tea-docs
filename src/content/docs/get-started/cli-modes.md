@@ -68,7 +68,7 @@ tea --rpc --continue --trust ignore
 ```
 
 RPC accepts prompts only through request frames. See
-[JSONL/RPC protocol](/automation/rpc/) for framing, request types, bounds, and
+[JSONL/RPC protocol](/tea-docs/automation/rpc/) for framing, request types, bounds, and
 reconnect behavior.
 
 ## Slash commands
@@ -94,7 +94,7 @@ reconnect behavior.
 | `/quit` | Restore the terminal and exit |
 
 MCP reconnect never changes a live registry and never replays an in-flight call.
-See [Using the TUI](/cli/tui/) for the timeline, composer, approval, selector,
+See [Using the TUI](/tea-docs/cli/tui/) for the timeline, composer, approval, selector,
 and keyboard workflow.
 
 ## Exit codes

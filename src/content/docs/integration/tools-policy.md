@@ -9,7 +9,7 @@ description: Add workspace tools to an agent and understand the default authoriz
 cargo add tea-coding-tools
 ```
 
-Extend the [Quick Start](/sdk/quick-start/) before building the session:
+Extend the [Quick Start](/tea-docs/sdk/quick-start/) before building the session:
 
 ```rust
 let workspace = WorkspaceRoot::new(".")?;

@@ -48,4 +48,4 @@ Allow-for-session is not a workspace bypass.
 An approval decision is committed before tool execution resumes. Closing the
 process while an approval is pending leaves the same request available after
 reopen. A tool interrupted after side effects begin is recorded as uncertain and
-is never replayed automatically. See [Sessions and recovery](/sessions/sessions/).
+is never replayed automatically. See [Sessions and recovery](/tea-docs/sessions/sessions/).

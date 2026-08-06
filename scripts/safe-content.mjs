@@ -22,7 +22,7 @@ const PATTERNS = [
 	{ name: 'private repository path', re: /agent-runtime-rs\.git/i },
 	{
 		name: 'private internal doc path',
-		re: /docs\/(?:decisions|plans|security|spikes|cli|mcp)\//,
+		re: /(?<![\w-])docs\/(?:decisions|plans|security|spikes|cli|mcp)\//,
 	},
 	{ name: 'commit ref', re: /\bcommit\s+[0-9a-f]{7,40}\b/i },
 	{ name: 'commit url ref', re: /\/commit\/[0-9a-f]{7,40}\b/i },

@@ -39,4 +39,4 @@ description: tea 如何决定是否加载项目本地设置、技能与提示模
 4. 拒绝宽泛的 shell 命令或读取环境凭据的命令。
 5. 保留变更前评审 Git 改动与测试输出。
 
-见 [审批](/zh/safety/approvals/) 与 [安全](/zh/safety/security/)。
+见 [审批](/tea-docs/zh/safety/approvals/) 与 [安全](/tea-docs/zh/safety/security/)。

@@ -44,7 +44,7 @@ is never replayed automatically.
 
 Allow-for-session is not a workspace bypass. The grant is bounded by actor,
 profile, session, tool and version, effects, access mode, and the persisted
-resource locator constraint. See [Approvals](/safety/approvals/).
+resource locator constraint. See [Approvals](/tea-docs/safety/approvals/).
 
 ## Compaction and branches
 

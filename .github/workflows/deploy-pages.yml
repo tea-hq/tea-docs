@@ -1,7 +1,8 @@
 name: deploy-pages
 
-# Least-privilege GitHub Pages deployment for the public tea-rs documentation
-# site. Deploys only the protected default branch. The job has only
+# Least-privilege GitHub Pages deployment for the public Tea documentation
+# site at https://tea-hq.github.io/tea-docs/. Deploys only the protected
+# default branch. The job has only
 # `contents:read`, `pages:write`, and `id-token:write` — no private-repository,
 # package-publication, or external-secret credentials. Deployment runs the same
 # docs-check gate (check + build + link validator + parity + safe-content)

@@ -38,4 +38,4 @@ Redirect(execution target, such as a sandbox)
 ## 恢复
 
 审批决策在工具执行恢复前提交。审批挂起时关闭进程，重开后同一请求仍可用。副作用开始后被中断的
-工具记录为不确定，且绝不自动回放。见 [会话与恢复](/zh/sessions/sessions/)。
+工具记录为不确定，且绝不自动回放。见 [会话与恢复](/tea-docs/zh/sessions/sessions/)。

@@ -58,4 +58,4 @@ an in-flight call.
 
 Use a restricted account, container, or VM when the server's filesystem,
 network, CPU, or external-service authority is too broad. See
-[Security boundaries](/safety/security/).
+[Security boundaries](/tea-docs/safety/security/).

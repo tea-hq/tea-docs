@@ -131,7 +131,7 @@ Override the three roots with `TEA_CONFIG_DIR`, `TEA_STATE_DIR`, and
 | Display | `NO_COLOR`, `TERM=dumb` |
 
 Additional adapter timeout, reasoning, header, and hosted-tool variables are
-available; prefer [`providers.json`](/configuration/credentials/) when a custom
+available; prefer [`providers.json`](/tea-docs/configuration/credentials/) when a custom
 endpoint needs several persistent values.
 
 ## Project resources
@@ -140,7 +140,7 @@ A workspace containing `AGENTS.md`, `CLAUDE.md`, or `.tea/` has project-local
 resources. Tea asks before loading `.tea/settings.json`, `.tea/providers.json`,
 skills, or prompt templates. `--trust ignore` runs without those resources;
 `--trust once` loads them for one invocation; `--trust persist` saves the trust
-decision. See [Workspace trust](/safety/trust/).
+decision. See [Workspace trust](/tea-docs/safety/trust/).
 
 MCP has additional required safety declarations. See
-[MCP configuration](/mcp/configuration/).
+[MCP configuration](/tea-docs/mcp/configuration/).

@@ -38,4 +38,4 @@ isolation, and approval of one tool call does not constrain the server's other
 filesystem, network, CPU, or account permissions. Use an external containment
 boundary when those permissions are unacceptable.
 
-For the ready-made CLI path, see [MCP configuration](/mcp/configuration/).
+For the ready-made CLI path, see [MCP configuration](/tea-docs/mcp/configuration/).

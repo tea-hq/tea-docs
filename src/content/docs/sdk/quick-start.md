@@ -62,5 +62,5 @@ committing it to source. Tea's agent loop, messages, tools, policy, and sessions
 remain provider-independent.
 
 This example uses an in-memory session and no tools. Next, add
-[workspace tools and policy](/integration/tools-policy/) or choose another
-[model provider](/integration/model-providers/).
+[workspace tools and policy](/tea-docs/integration/tools-policy/) or choose another
+[model provider](/tea-docs/integration/model-providers/).

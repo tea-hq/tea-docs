@@ -3,7 +3,7 @@ title: 嵌入 Tea
 description: 在应用中持有 Agent 会话，并判断何时切换到更底层的运行时。
 ---
 
-从 [`AgentSession`](/zh/sdk/quick-start/) 开始。只要对话需要保留上下文，就持续持有同一个会话：
+从 [`AgentSession`](/tea-docs/zh/sdk/quick-start/) 开始。只要对话需要保留上下文，就持续持有同一个会话：
 
 ```rust
 let agent = AgentSession::builder(Arc::new(provider), model)
@@ -40,4 +40,4 @@ let agent = AgentSession::builder(Arc::new(provider), model)
 
 Tea 使用应用已经拥有的 Tokio 运行时，不会创建嵌套运行时或调用 `block_on`。
 
-接下来可以添加[工具与策略](/zh/integration/tools-policy/)或[持久化会话存储](/zh/integration/session-stores/)。
+接下来可以添加[工具与策略](/tea-docs/zh/integration/tools-policy/)或[持久化会话存储](/tea-docs/zh/integration/session-stores/)。

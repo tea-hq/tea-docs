@@ -10,10 +10,10 @@ const zh = (label) => ({ 'zh-CN': label });
 // content directories enable Starlight's language switcher, fallback, and
 // translation-parity checks.
 export default defineConfig({
-  // Org-root GitHub Pages deployment at https://tea-hq.github.io/ — no `base`
-  // path prefix. A subpath or custom-domain target would be set at a later
-  // review; today the documentation is published at the organization root.
+  // Repository GitHub Pages deployment at https://tea-hq.github.io/tea-docs/.
+  // Keep the repository path in generated links and asset URLs.
   site: 'https://tea-hq.github.io',
+  base: '/tea-docs',
   integrations: [
     mermaid({ autoTheme: true, enableLog: false }),
     starlight({

@@ -10,7 +10,7 @@ description: 高效使用 Tea 的时间线、编辑器、工具、审批、会�
 tea --cwd /path/to/project --new
 ```
 
-在新工作区启动 Tea 前，请先阅读[安装与首次运行](/zh/get-started/install/)。
+在新工作区启动 Tea 前，请先阅读[安装与首次运行](/tea-docs/zh/get-started/install/)。
 
 ## 屏幕结构
 
@@ -68,15 +68,15 @@ tea --cwd /path/to/project --new
 静默拒绝审批。
 
 审批只授权已记录操作，不会沙箱化原生工具或 MCP Server。启用变更型工具前，请阅读
-[审批与授权](/zh/safety/approvals/)和[安全边界](/zh/safety/security/)。
+[审批与授权](/tea-docs/zh/safety/approvals/)和[安全边界](/tea-docs/zh/safety/security/)。
 
 ## 会话与恢复
 
 `/session` 打开可搜索的会话选择器，`/tree` 打开当前分支选择器。切换时会保留草稿，直到用户
 提交。待处理审批和规范记录可在重启后恢复；临时的转向与后续消息显示队列不会持久化。
 
-接下来阅读[会话与恢复](/zh/sessions/sessions/)、
-[CLI 模式与命令](/zh/get-started/cli-modes/)和[配置](/zh/configuration/settings/)。
+接下来阅读[会话与恢复](/tea-docs/zh/sessions/sessions/)、
+[CLI 模式与命令](/tea-docs/zh/get-started/cli-modes/)和[配置](/tea-docs/zh/configuration/settings/)。
 
 ## 设计来源
 

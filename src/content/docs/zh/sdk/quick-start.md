@@ -58,5 +58,5 @@ cargo run
 运行前请替换代码中的 `YOUR_API_KEY`。生产环境应通过应用自己的密钥或配置层提供该值，不要将其提交到
 源码。Tea 的 Agent 循环、消息、工具、策略与会话仍然与 Provider 无关。
 
-本例使用内存会话且不启用工具。接下来可以添加[工作区工具与策略](/zh/integration/tools-policy/)，
-或选择其他[模型 Provider](/zh/integration/model-providers/)。
+本例使用内存会话且不启用工具。接下来可以添加[工作区工具与策略](/tea-docs/zh/integration/tools-policy/)，
+或选择其他[模型 Provider](/tea-docs/zh/integration/model-providers/)。
